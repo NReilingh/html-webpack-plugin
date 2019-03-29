@@ -879,10 +879,10 @@ class HtmlWebpackPlugin {
     if (body.length) {
       if (bodyRegExp.test(html)) {
         // Append assets to body element
-        html = html.replace(bodyRegExp, match => body.join('') + match);
+        html = html.replace(bodyRegExp, match => '  ' + body.join('\n    ') + '\n  ' + match);
       } else {
         // Append scripts to the end of the file if no <body> element exists:
-        html += body.join('');
+        html += body.join('\n');
       }
     }
 
@@ -892,12 +892,12 @@ class HtmlWebpackPlugin {
         if (!htmlRegExp.test(html)) {
           html = '<head></head>' + html;
         } else {
-          html = html.replace(htmlRegExp, match => match + '<head></head>');
+          html = html.replace(htmlRegExp, match => match + '  <head>\n  </head>');
         }
       }
 
       // Append assets to head element
-      html = html.replace(headRegExp, match => head.join('') + match);
+      html = html.replace(headRegExp, match => '  ' + head.join('\n    ') + '\n  ' + match);
     }
 
     // Inject manifest into the opening html tag
